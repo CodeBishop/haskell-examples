@@ -1,2 +1,7 @@
+# Ignore files that have no extension (ignore all, un-ignore files with extensions, ug-ignore directories)
+*
+!*.*
+!*/
+
 *.o
 *.hi
