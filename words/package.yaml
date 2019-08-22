@@ -1,7 +1,7 @@
 name:                words
 version:             0.1.0.0
 github:              "CodeBishop/words"
-license:             proprietary
+license:             AllRightsReserved
 author:              "Scott Bishop"
 maintainer:          "stack@mademedo.this"
 copyright:           "this year"
@@ -26,7 +26,7 @@ library:
   source-dirs: src
 
 executables:
-  words-exe:
+  words:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
