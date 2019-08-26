@@ -1,6 +1,5 @@
 module Lib
-    ( formatGrid 
-    , outputGrid
+    ( outputGrid
     , findWord
     , findWords
     , findWordInLine
