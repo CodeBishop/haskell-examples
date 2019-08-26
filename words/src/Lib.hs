@@ -16,10 +16,7 @@ import Data.Maybe (catMaybes)
 type Grid = [String]
 
 outputGrid :: Grid -> IO ()
-outputGrid grid = putStrLn (formatGrid grid)
-
-formatGrid :: Grid -> String
-formatGrid = unlines
+outputGrid = putStrLn . unlines
 
 findWord :: Grid -> String -> Maybe String
 findWord grid word = 
