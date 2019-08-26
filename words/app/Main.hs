@@ -1,6 +1,7 @@
 module Main where
 
+import Data
 import Lib
 
 main :: IO ()
-main = someFunc
+main = outputGrid grid

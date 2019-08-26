@@ -1,6 +1,6 @@
 module Data ( grid
-            , languages )
-              where
+            , languages
+            ) where
 
 grid = [ "__C________R___"
        , "__SI________U__"
