@@ -62,7 +62,5 @@ repeat8 = take 8 . repeat
 cols8 = repeat8 [0..7]
 rows8 = map repeat8 [0..7]
 
-zipOverGrid = zipWith zip
-
 -- Constructing the coordinate grid using a list comprehension
 coords3 = [ [ (row, col) | col <- [0..7] ] | row <- [0..7] ]

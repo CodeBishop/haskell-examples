@@ -12,10 +12,12 @@ module Lib
 import Data.List (isInfixOf, transpose)
 import Data.Maybe (catMaybes)
 
+data Cell = Cell (Integer, Integer) Char deriving (Eq, Ord, Show)
+
 type Grid = [String]
 
-outputGrid :: Grid -> IO ()
-outputGrid = putStrLn . unlines
+diagonalize :: Grid -> Grid
+diagonalize = transpose . skew
 
 findWord :: Grid -> String -> Maybe String
 findWord grid word = 
@@ -39,10 +41,14 @@ getLines grid =
       lines = horizontal ++ vertical ++ diagonal1 ++ diagonal2
   in lines ++ (map reverse lines)
 
-diagonalize :: Grid -> Grid
-diagonalize = transpose . skew
+outputGrid :: Grid -> IO ()
+outputGrid = putStrLn . unlines
 
 skew :: Grid -> Grid
 skew [] = []
 skew (l:ls) = l : skew (map indent ls)
   where indent line = '_' : line 
+
+zipOverGrid = zipWith zip
+zipOverGridWith = zipWith . zipWith
+-- zipOverGridWith f a b = (zipWith (zipWith f)) a b 
