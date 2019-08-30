@@ -41,11 +41,8 @@ outputGrid :: Grid Cell -> IO ()
 outputGrid grid = putStrLn (formatGrid grid)
 
 formatGrid :: Grid Cell -> String
-formatGrid grid = unlines (mapOverGrid cell2char grid)
--- formatGrid grid = 
---   let charGrid = (map . map) cell2char grid
---   in unlines charGrid
-  
+formatGrid = unlines . mapOverGrid cell2char
+
 cell2char :: Cell -> Char
 cell2char (Cell _ c) = c
 
