@@ -15,7 +15,9 @@ module Lib
 import Data.List (isInfixOf, transpose)
 import Data.Maybe (catMaybes)
 
-data Cell = Cell (Integer, Integer) Char deriving (Eq, Ord, Show)
+data Cell = Cell (Integer, Integer) Char
+          | Indent
+            deriving (Eq, Ord, Show)
 type Grid a = [[a]]
 
 zipOverGrid :: Grid a -> Grid b -> Grid (a, b)
@@ -46,7 +48,7 @@ formatGrid = unlines . mapOverGrid cell2char
 cell2char :: Cell -> Char
 cell2char (Cell _ c) = c
 
-getLines :: Grid Char -> [String]
+getLines :: Grid Cell -> [[Cell]]
 getLines grid =
   let horizontal = grid
       vertical = transpose grid
@@ -55,24 +57,25 @@ getLines grid =
       lines = horizontal ++ vertical ++ diagonal1 ++ diagonal2
   in lines ++ (map reverse lines)
 
-diagonalize :: Grid Char -> Grid Char
+diagonalize :: Grid Cell -> Grid Cell
 diagonalize = transpose . skew
 
-findWord :: Grid Char -> String -> Maybe String
-findWord grid word = 
-  let found = or $ map (findWordInLine word) (getLines grid)
-  in if found then Just word else Nothing
+skew :: Grid Cell -> Grid Cell
+skew [] = []
+skew (l:ls) = l : skew (map indent ls)
+  where indent line = Indent : line 
 
-findWords :: Grid Char -> [String] -> [String]
+findWord :: Grid Cell -> String -> Maybe [Cell]
+findWord grid word = undefined
+  -- let lines = getLines grid
+  --     found = or $ map (findWordInLine word) lines
+  -- in if found then Just word else Nothing
+
+findWords :: Grid Cell -> [String] -> [[Cell]]
 findWords grid words = 
   let foundWords = map (findWord grid) words
   in catMaybes foundWords
 
-findWordInLine :: String -> String -> Bool
-findWordInLine = isInfixOf
-
-skew :: Grid Char -> Grid Char
-skew [] = []
-skew (l:ls) = l : skew (map indent ls)
-  where indent line = '_' : line 
+findWordInLine :: String -> [Cell] -> Maybe [Cell]
+findWordInLine = undefined --isInfixOf
 
