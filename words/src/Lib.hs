@@ -5,6 +5,7 @@ module Lib
     , findWord
     , findWords
     , findWordInLine
+    , findWordInCellLinePrefix
     , getLines
     , gridWithCoords
     , mapOverGrid
@@ -82,3 +83,8 @@ findWords grid words =
 findWordInLine :: String -> [Cell] -> Maybe [Cell]
 findWordInLine = undefined --isInfixOf
 
+findWordInCellLinePrefix :: [Cell] -> String -> [Cell] -> Maybe [Cell]
+findWordInCellLinePrefix acc (x:xs) (c:cs) | x == cell2char c
+  = findWordInCellLinePrefix (c : acc) xs cs
+findWordInCellLinePrefix acc [] _ = Just $ reverse acc
+findWordInCellLinePrefix _ _ _ = Nothing
