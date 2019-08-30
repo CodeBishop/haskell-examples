@@ -5,6 +5,7 @@ module Lib
     , findWordInLine
     , getLines
     , gridWithCoords
+    , mapOverGrid
     , skew
     , zipOverGrid
     , zipOverGridWith
@@ -40,12 +41,22 @@ outputGrid :: Grid Cell -> IO ()
 outputGrid grid = putStrLn (formatGrid grid)
 
 formatGrid :: Grid Cell -> String
-formatGrid grid = 
-  let charGrid = (map . map) cell2char grid
-  in unlines charGrid
-
+formatGrid grid = unlines (mapOverGrid cell2char grid)
+-- formatGrid grid = 
+--   let charGrid = (map . map) cell2char grid
+--   in unlines charGrid
+  
 cell2char :: Cell -> Char
 cell2char (Cell _ c) = c
+
+getLines :: Grid Char -> [String]
+getLines grid =
+  let horizontal = grid
+      vertical = transpose grid
+      diagonal1 = diagonalize grid
+      diagonal2 = diagonalize $ map reverse grid
+      lines = horizontal ++ vertical ++ diagonal1 ++ diagonal2
+  in lines ++ (map reverse lines)
 
 diagonalize :: Grid Char -> Grid Char
 diagonalize = transpose . skew
@@ -62,15 +73,6 @@ findWords grid words =
 
 findWordInLine :: String -> String -> Bool
 findWordInLine = isInfixOf
-
-getLines :: Grid Char -> [String]
-getLines grid =
-  let horizontal = grid
-      vertical = transpose grid
-      diagonal1 = diagonalize grid
-      diagonal2 = diagonalize $ map reverse grid
-      lines = horizontal ++ vertical ++ diagonal1 ++ diagonal2
-  in lines ++ (map reverse lines)
 
 skew :: Grid Char -> Grid Char
 skew [] = []
