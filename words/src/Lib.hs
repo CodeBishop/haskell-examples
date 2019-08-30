@@ -1,5 +1,7 @@
 module Lib
     ( outputGrid
+    , Cell(Cell, Indent)
+    , cell2char
     , findWord
     , findWords
     , findWordInLine
@@ -47,6 +49,7 @@ formatGrid = unlines . mapOverGrid cell2char
 
 cell2char :: Cell -> Char
 cell2char (Cell _ c) = c
+cell2char Indent = '?'
 
 getLines :: Grid Cell -> [[Cell]]
 getLines grid =
